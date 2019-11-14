@@ -1,12 +1,14 @@
-// Update with your config settings.
-
 module.exports = {
 
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './dev.sqlite3'
-    }
+      filename: './src/models/migrations/dev.sqlite3'
+    },
+    migrations: {
+      directory: './src/models/migrations'
+    },
+    useNullAsDefault: true
   },
 
   staging: {
@@ -40,5 +42,4 @@ module.exports = {
       tableName: 'knex_migrations'
     }
   }
-
-};
+}
