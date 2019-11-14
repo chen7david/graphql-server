@@ -1,0 +1,31 @@
+{
+  "name": "cluster-graph-server",
+  "version": "1.0.0",
+  "description": "GraphQL backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chen7david/cluster-graph-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chen7david/cluster-graph-server/issues"
+  },
+  "homepage": "https://github.com/chen7david/cluster-graph-server#readme",
+  "dependencies": {
+    "@hapi/joi": "^16.1.7",
+    "apollo-server": "^2.9.9",
+    "bcrypt": "^3.0.6",
+    "graphql": "^14.5.8",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.1",
+    "objection": "^1.6.11",
+    "objection-db-errors": "^1.1.1",
+    "sqlite3": "^4.1.0"
+  }
+}
