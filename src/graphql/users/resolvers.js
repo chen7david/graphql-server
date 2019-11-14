@@ -1,4 +1,6 @@
 const { User } = require('./../../models')
+const { UniqueViolationError } = require('objection-db-errors')
+
 const resolvers = {
     Query:{
         // Queries go here ...
@@ -23,7 +25,7 @@ const resolvers = {
         patchUser: async (_, args) => {
             const user = await User.query().where('userId',args.userId).first()
             if(!user) throw new Error('invalid user id')
-            return await user.$query().patchAndFetch(args.patchUserObject)
+            return await user.$query().patchAndFetch(args.patchUserInfo)
         },
 
         deleteUser: async (_, args) => await User.query().where('userId',args.userId).delete(),
