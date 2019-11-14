@@ -6,7 +6,6 @@ const typeDefs = gql`
     type Query
     type Mutation
 `
-console.log(users)
 const server = new ApolloServer({
     cors:{
         origen: '*',

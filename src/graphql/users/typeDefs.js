@@ -10,12 +10,25 @@ const typeDefs = gql`
         emailVerified: Boolean!
     }
 
-    extend type Query {
-        users:[User]!
+    input addUserInfo {
+        username: String!
+        email: String!
+        password: String!
     }
 
+    input patchUserInfo {
+        email: String
+    }
+
+    extend type Query {
+        users:[User]!
+        user(userId: String!): User
+    }
+    
     extend type Mutation {
-        
+        addUser(addUserInfo: addUserInfo!): User!
+        deleteUser(userId: String!): Boolean!
+        patchUser(userId: String!, patchUserInfo: patchUserInfo!): User!
     }
 `
 
