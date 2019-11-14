@@ -1,4 +1,5 @@
 const BaseModel = require('./BaseModel')
+const crypto = require('crypto')
 
 class Role extends BaseModel {
 

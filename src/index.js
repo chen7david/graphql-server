@@ -1,6 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server')
 const { PORT } = require('./config')
-const { users } = require('./graphql')
+const { users, roles } = require('./graphql')
 
 const typeDefs = gql`
     type Query
@@ -11,8 +11,8 @@ const server = new ApolloServer({
         origen: '*',
         credentials: true
     },
-    typeDefs: [typeDefs, users.typeDefs],
-    resolvers: [users.resolvers],
+    typeDefs: [typeDefs, users.typeDefs, roles.typeDefs],
+    resolvers: [users.resolvers, roles.resolvers],
 })
 
 server.listen(PORT).then(({url}) => {
