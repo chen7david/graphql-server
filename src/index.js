@@ -26,7 +26,7 @@ const server = new ApolloServer({
             return { authenticated: true, $me: user }
 
         }catch(e){ 
-            console.log(e)
+            // console.log(e)
             return { authenticated: false } 
         }
     }

@@ -6,6 +6,7 @@ const typeDefs = gql`
         roleId: String!
         name: String!
         description: String!
+        users: [User]!
         global: Boolean!
     }
 
@@ -20,6 +21,11 @@ const typeDefs = gql`
         description: String
     }
 
+    input syncRoleUsersInfo {
+        roleId: String!
+        userIds: [String]!
+    }
+
     extend type Query {
         roles: [Role]!
         role(roleId: String!): Role
@@ -29,6 +35,7 @@ const typeDefs = gql`
         addRole(addRoleInfo: addRoleInfo!): Role!
         deleteRole(roleId: String!): Boolean!
         patchRole(roleId: String!, patchRoleInfo: patchRoleInfo!): Role!
+        syncRoleUsers(syncRoleUsersInfo: syncRoleUsersInfo): [User]!
     }
 `
 
