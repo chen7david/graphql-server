@@ -1,5 +1,6 @@
 const { User, Role } = require('./../../models')
 const { getMe } = require('./../../helpers/auth')
+const { validate, schema } = require('./../../helpers/validation')
 const { UniqueViolationError } = require('objection-db-errors')
 
 const resolvers = {
@@ -18,11 +19,14 @@ const resolvers = {
 
         addUser: async (_, args) => {
             try {
-                const user = await User.query().insert(args.addUserInfo)
+                const data = validate(schema.addUser, args.addUserInfo)
+                const user = await User.query().insert(data)
                 return user
             }catch(error){
                 if(error instanceof UniqueViolationError) 
                     throw new Error(`${error.columns[0]} already exists`)
+
+                throw(error)
             }
         },
 
