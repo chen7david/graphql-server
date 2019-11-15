@@ -6,6 +6,7 @@ const typeDefs = gql`
         userId: String!
         username: String!
         email: String!
+        roles: [Role]!
         disabled: Boolean!
         emailVerified: Boolean!
     }

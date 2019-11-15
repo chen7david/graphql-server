@@ -64,6 +64,13 @@ const resolvers = {
     
             return await user.$relatedQuery('roles')
         },
+    },
+
+    User: {
+        roles: async (user, args, context) => {
+            const roles = await user.$relatedQuery('roles')
+            return roles
+        }
     }
 }
 
