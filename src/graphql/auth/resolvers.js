@@ -7,7 +7,7 @@ const resolvers = {
     Mutation: {
         // Mutations go here ...
         
-        authenticate: async (parent, args) => {
+        authenticate: async (_, args) => {
             const { username, password } = args.authInfo
             const user = await User.query().where('username', username).first()
             if(!user) throw new Error('invalid username password combination')
