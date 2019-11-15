@@ -1,7 +1,7 @@
 const { ApolloServer, gql } = require('apollo-server')
 const JWT = require('jsonwebtoken')
 const { PORT, JWT_SECRET } = require('./config')
-const { users, roles } = require('./graphql')
+const { users, roles, auth } = require('./graphql')
 
 
 const typeDefs = gql`
@@ -13,8 +13,17 @@ const server = new ApolloServer({
         origen: '*',
         credentials: true
     },
-    typeDefs: [typeDefs, users.typeDefs, roles.typeDefs],
-    resolvers: [users.resolvers, roles.resolvers],
+    typeDefs: [
+        typeDefs, 
+        users.typeDefs, 
+        roles.typeDefs,
+        auth.typeDefs
+    ],
+    resolvers: [
+        users.resolvers, 
+        roles.resolvers,
+        auth.resolvers
+    ],
     context: async ({req}) => {
         try{
             const token = req.headers.authorization || ''
