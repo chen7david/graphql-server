@@ -34,8 +34,12 @@ const server = new ApolloServer({
 
             return { authenticated: true, $me: user }
 
-        }catch(e){ 
-            // console.log(e)
+        }catch(error){ 
+            // console.log(error)
+            errors = ['invalid signature', 'jwt expired', 'invalid token', 'jwt malformed']
+            if(errors.includes(error.message) ){
+                throw new Error('jwt expired')
+            }
             return { authenticated: false } 
         }
     }
