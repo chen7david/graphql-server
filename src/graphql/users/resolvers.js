@@ -1,4 +1,5 @@
 const { User, Role } = require('./../../models')
+const { getMe } = require('./../../helpers/auth')
 const { UniqueViolationError } = require('objection-db-errors')
 
 const resolvers = {
@@ -6,7 +7,7 @@ const resolvers = {
         // Queries go here ...
 
         users: async (_, __, ctx) => {
-            console.log(ctx)
+            const $me = getMe(ctx)
             return await User.query()
         },
 
@@ -34,9 +35,7 @@ const resolvers = {
         deleteUser: async (_, args) => await User.query().where('userId',args.userId).delete(),
 
         syncUserRoles: async (_, args, ctx) => {
-            // const $me = context.$me || false
-            // if(!$me) throw new Error('not authenticated')
-            // $me.hasRight('syncUserRoles')
+            
     
             const { userId, roleIds } = args.syncUserRolesInfo
     
