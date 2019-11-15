@@ -13,6 +13,9 @@ const server = new ApolloServer({
     },
     typeDefs: [typeDefs, users.typeDefs, roles.typeDefs],
     resolvers: [users.resolvers, roles.resolvers],
+    context: () => {
+        
+    }
 })
 
 server.listen(PORT).then(({url}) => {

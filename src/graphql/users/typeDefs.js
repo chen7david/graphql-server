@@ -20,6 +20,11 @@ const typeDefs = gql`
         email: String
     }
 
+    input syncUserRolesInfo {
+        userId: String!
+        roleIds: [String]!
+    }
+
     extend type Query {
         users:[User]!
         user(userId: String!): User
@@ -29,6 +34,7 @@ const typeDefs = gql`
         addUser(addUserInfo: addUserInfo!): User!
         deleteUser(userId: String!): Boolean!
         patchUser(userId: String!, patchUserInfo: patchUserInfo!): User!
+        syncUserRoles(syncUserRolesInfo: syncUserRolesInfo): [Role]!
     }
 `
 
