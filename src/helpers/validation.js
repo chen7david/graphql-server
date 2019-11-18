@@ -2,8 +2,9 @@ const Joi = require('@hapi/joi')
 
 module.exports = {
     validate: (schema, data) => {
-        const validate = schema.validate(data)
-        if(validate.error){
+
+        const { error, value } = schema.validate(data)
+        if(error){
         
             const { error:{ details } } = validate
             const messages = {}
@@ -15,7 +16,7 @@ module.exports = {
             console.log(messages)
             throw new Error(JSON.stringify(messages))
         }else{
-            return validate.value
+            return value
         }        
 
     },
@@ -25,6 +26,11 @@ module.exports = {
             username: Joi.string().min(5),
             email: Joi.string().min(5),
             password: Joi.string().min(5),
+        }),
+
+        addGroup: Joi.object().options({abortEarly:false}).keys({
+            name: Joi.string().min(5),
+            description: Joi.string(),
         })
     }
 }

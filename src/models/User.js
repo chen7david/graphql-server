@@ -11,7 +11,7 @@ class User extends BaseModel {
         this.userId = 'US' + await crypto.randomBytes(5).toString('hex').toUpperCase()
 
         // HASHES PASSWORD UPON INSERT
-        this.password = await bcrypt.hash(this.password,10)
+        this.password = await bcrypt.hash(this.password, 10)
     }
 
     async $beforeUpdate(){
@@ -27,6 +27,7 @@ class User extends BaseModel {
     static get relationMappings(){ 
 
         const Role = require('./Role')
+        const Group = require('./Group')
 
         return {
             roles:{
@@ -38,6 +39,19 @@ class User extends BaseModel {
                     through:{
                         from:'user_roles.user_id',
                         to:'user_roles.role_id'
+                    }
+                }
+            },
+
+            groups:{
+                relation: BaseModel.ManyToManyRelation,
+                modelClass: Group,
+                join:{
+                    from:'users.id',
+                    to:'groups.id',
+                    through:{
+                        from:'user_groups.user_id',
+                        to:'user_groups.group_id'
                     }
                 }
             }
