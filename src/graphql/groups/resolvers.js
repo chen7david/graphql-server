@@ -23,7 +23,6 @@ const resolvers = {
                 const user = await Group.query().insert(data)
                 return user
             }catch(error){
-                console.log(error)
                 if(error instanceof UniqueViolationError) 
                     throw new Error(`${error.columns[0]} already exists`)
                 
@@ -49,16 +48,19 @@ const resolvers = {
             const { groupId , userIds } = args.syncGroupUserInfo
     
             const group = await Group.query().where('groupId', groupId).first()
-    
+
             if(!group) throw new Error('invalid groupId')
-    
+
             const removeUsers = await group.$relatedQuery('users').whereNotIn('userId', userIds)
+            console.log('removeUsers:',removeUsers)
             
             for(const user of removeUsers){
                 await group.$relatedQuery('users').unrelate().where('user_id', user.id)
             }
 
             const addUsers = await User.query().whereIn('userId', userIds)
+
+            console.log('addUsers:',addUsers)
 
             for(const user of addUsers){
                 try{
