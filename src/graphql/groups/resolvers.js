@@ -12,7 +12,7 @@ const resolvers = {
             return await Group.query()
         },
 
-        group: async (parent, args) => await Group.query().where('groupId', args.groupId).first(),
+        group: async (_, args) => await Group.query().where('groupId', args.groupId).first(),
     },
     Mutation: {
         // Mutations go here ...
@@ -74,10 +74,10 @@ const resolvers = {
         },
     },
 
-    User: {
-        roles: async (user, args, context) => {
-            const roles = await user.$relatedQuery('roles')
-            return roles
+    Group: {
+        users: async (group, args, context) => {
+            const groups = await group.$relatedQuery('users')
+            return groups
         }
     }
 }
