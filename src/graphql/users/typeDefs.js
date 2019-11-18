@@ -16,6 +16,7 @@ const typeDefs = gql`
     type Point {
         amount: Int!
         description: String!
+        created_at: String!
     }
 
     input addUserInfo {
@@ -36,6 +37,10 @@ const typeDefs = gql`
     extend type Query {
         users:[User]!
         user(userId: String!): User
+    }
+
+    input depositPoints {
+        
     }
     
     extend type Mutation {
