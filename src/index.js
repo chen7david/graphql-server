@@ -1,5 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server')
 const JWT = require('jsonwebtoken')
+const { User } = require('./models')
 const { PORT, JWT_SECRET } = require('./config')
 const { users, roles, auth } = require('./graphql')
 
@@ -28,8 +29,8 @@ const server = new ApolloServer({
         try{
             const token = req.headers.authorization || ''
             const { userId } = JWT.verify(token.replace('Bearer ',''), JWT_SECRET)
-            const user = await User.query().where('userId', userId).eager('roles.rights').first()
-
+            const user = await User.query().where('userId', userId)
+            // .eager('roles.rights').first()
             if(!user) throw new Error('invalid userId')
 
             return { authenticated: true, $me: user }
