@@ -12,7 +12,14 @@ const resolvers = {
             return await User.query()
         },
 
-        user: async (parent, args) => await User.query().where('userId', args.userId).first(),
+        user: async (_, args) => {
+            const user = await User.query().where('userId', args.userId).first()
+            // await user.depositPoints({
+            //     amount:200,
+            //     description:'direct deposit'
+            // })
+            return user
+        },
     },
     Mutation: {
         // Mutations go here ...
@@ -73,6 +80,13 @@ const resolvers = {
         roles: async (user, args, context) => {
             const roles = await user.$relatedQuery('roles')
             return roles
+        },
+        pointsHistory: async (parent) => {
+            return await parent.$relatedQuery('points')
+        },
+        points: async (parent) => {
+            const sum = await parent.$relatedQuery('points').sum('amount as points').first()
+            return sum.points || 0
         }
     }
 }

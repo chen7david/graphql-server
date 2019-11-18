@@ -3,8 +3,8 @@ exports.up = function(knex) {
     table.increments()
     table.string('groupId').unique().notNullable()
     table.string('name').unique().notNullable()
-    table.text('description')
-    table.boolean('active')
+    table.text('description').defaultTo('write description here ...')
+    table.boolean('active').defaultTo(false)
     table.timestamps(true,true)
   })
 }

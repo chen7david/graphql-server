@@ -4,7 +4,7 @@ exports.up = function(knex) {
     table.string('roleId').unique().notNullable()
     table.string('name').unique().notNullable()
     table.text('description')
-    table.boolean('global')
+    table.boolean('global').defaultTo(false)
     table.timestamps(true,true)
   })
 }

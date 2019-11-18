@@ -7,8 +7,15 @@ const typeDefs = gql`
         username: String!
         email: String!
         roles: [Role]!
+        pointsHistory: [Point]!
+        points: Int
         disabled: Boolean!
         emailVerified: Boolean!
+    }
+
+    type Point {
+        amount: Int!
+        description: String!
     }
 
     input addUserInfo {

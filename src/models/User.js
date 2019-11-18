@@ -24,10 +24,15 @@ class User extends BaseModel {
         return await bcrypt.compare(password, this.password)    
     }
 
+    async depositPoints(object){
+        return await this.$relatedQuery('points').insert(object)
+    }
+
     static get relationMappings(){ 
 
         const Role = require('./Role')
         const Group = require('./Group')
+        const Point = require('./Point')
 
         return {
             roles:{
@@ -54,6 +59,14 @@ class User extends BaseModel {
                         to:'user_groups.group_id'
                     }
                 }
+            },
+            points: {
+                relation: BaseModel.HasManyRelation,
+                modelClass: Point,
+                join:{
+                    from:'users.id',
+                    to:'points.user_id',
+                } 
             }
         }
     }
