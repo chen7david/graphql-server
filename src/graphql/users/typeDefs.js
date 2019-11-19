@@ -33,6 +33,17 @@ const typeDefs = gql`
         roleIds: [String]!
     }
 
+    input addPointsInfo {
+        amount: Int!
+        description: String
+    }
+
+    input to {
+        userId: String!
+        amount: Int!
+        description: String
+    }
+
     extend type Query {
         users:[User]!
         user(userId: String!): User
@@ -42,7 +53,9 @@ const typeDefs = gql`
         addUser(addUserInfo: addUserInfo!): User!
         deleteUser(userId: String!): Boolean!
         patchUser(userId: String!, patchUserInfo: patchUserInfo!): User!
-        syncUserRoles(syncUserRolesInfo: syncUserRolesInfo): [Role]!
+        syncUserRoles(syncUserRolesInfo: syncUserRolesInfo!): [Role]!
+        addPoints(userId: String!, addPointsInfo: addPointsInfo!): User!
+        stranferPoints(userId: String!, to:to): User!
     }
 `
 
