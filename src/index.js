@@ -29,9 +29,13 @@ const server = new ApolloServer({
     context: async ({req}) => {
         try{
             const token = req.headers.authorization || ''
-            const { userId } = JWT.verify(token.replace('Bearer ',''), JWT_SECRET)
-            const user = await User.query().where('userId', userId)
+            const { userId } = JWT.decode(token.replace('Bearer ',''))
+            if(!userId) throw new Error('invalid token')
+            const user = await User.query().where('userId', userId).first()
             // .eager('roles.rights').first()
+            if(!user) throw new Error('invalid token')
+            JWT.verify(token.replace('Bearer ',''), JWT_SECRET + user.password)
+            
             if(!user) throw new Error('invalid userId')
 
             return { authenticated: true, $me: user }

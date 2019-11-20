@@ -16,7 +16,8 @@ class User extends BaseModel {
 
     async $beforeUpdate(){
         // SET EMAIL VERIFIED TO NULL WHEN EMAIL IS UPDATED
-        if(this.email) this.emailVerified = null
+        if(this.password) this.password = await bcrypt.hash(this.password, 10)
+        if(this.email) this.emailVerified = false
     }
 
     async verifyPassword(password){

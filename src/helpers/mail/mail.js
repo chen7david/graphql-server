@@ -10,7 +10,8 @@ const {
      EMAIL_SERVICE,
      GMAIL_ACCOUNT,
      GMAIL_PASSWORD,
-     EMAIL_SENDER 
+     EMAIL_SENDER,
+     BASE_URL
 } = require('../../config')
 
 const Mailer = nodemailer.createTransport({
@@ -40,6 +41,7 @@ module.exports = {
     },
 
     template: (name, data = null) => {
+        if(data.link) data.link = BASE_URL + data.link
         const template = fs.readFileSync(path.resolve(__dirname, `./template/${name}.html`), 'utf8')
         return  data != null ?  _.template(template)(data) : template
     }

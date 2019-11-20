@@ -11,6 +11,7 @@ const resolvers = {
 
         users: async (_, __, ctx) => {
             const $me = getMe(ctx)
+            console.log('me:',$me)
             return await User.query()
         },
 

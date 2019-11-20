@@ -1,4 +1,5 @@
 module.exports = {
+    BASE_URL: 'http://localhost:5000/',
     PORT: 5000,
     JWT_SECRET: 'secret',
     JWT_DURATION: '1d',
@@ -8,7 +9,10 @@ module.exports = {
     JWT_ACTIVATE_ACCOUNT_DURATION: '7d',
 
     EMAIL_SERVICE: 'gmail',
-    EMAIL_SENDER:'user@gmail.com',
-    GMAIL_ACCOUNT:'anotheruser@gmail.com',
-    GMAIL_PASSWORD:'password',
+    EMAIL_SENDER:'@gmail.com',
+    GMAIL_ACCOUNT:'@gmail.com',
+    GMAIL_PASSWORD:'',
+
+    PASSWORD_RESET_SECRET: 'password-reset',
+    PASSWORD_RESET_DURATION: '30m'
 }
