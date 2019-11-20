@@ -45,7 +45,7 @@ module.exports = {
 
         accessToken: async (token) => {
             try{
-                const user = getUser(token)
+                const user = await getUser(token)
                 JWT.verify(token, JWT_SECRET + user.password)
                 return user
             }catch(error){
@@ -56,9 +56,9 @@ module.exports = {
         },
 
 
-        refreshToken: (token) => {
+        refreshToken: async (token) => {
             try{
-                const user = getUser(token)
+                const user = await getUser(token)
                 JWT.verify(token, JWT_REFRESH_SECRET + user.password)
                 return user
             }catch(error){

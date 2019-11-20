@@ -21,6 +21,19 @@ const resolvers = {
             }
         },
 
+        refreshToken: async (_, args) => {
+            const token = args.refreshToken
+            const user = await verify.activationToken(token)
+            if(!user) throw new Error('invalid token')
+            if(! await user.verifyPassword(password)) throw new Error('invalid token')
+            if(user.disabled) throw new Error('your account is disabled, please contact us to enable your account')
+    
+            return {
+                accessToken: sign.accessToken(user),
+                me: user
+            }
+        },
+
         activateAccount: async (_, args) => {
             const token = args.token
             const user = await verify.activationToken(token)
