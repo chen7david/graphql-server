@@ -2,19 +2,20 @@ const { gql } = require('apollo-server')
 
 const typeDefs = gql`
 
-    input authInfo {
-        username: String!
-        password: String!
-    }
-
     type authCredentials {
         accessToken: String!
         refreshToken: String!
         me: User!
     }
+
+    input authInfo {
+        username: String!
+        password: String!
+    }
     
     extend type Mutation {
         authenticate(authInfo: authInfo!): authCredentials!
+        activateAccount(token: String!): authCredentials!
     }
 `
 

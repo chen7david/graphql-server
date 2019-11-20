@@ -47,7 +47,6 @@ const resolvers = {
 
         syncUserRoles: async (_, args, ctx) => {
             
-    
             const { userId, roleIds } = args.syncUserRolesInfo
     
             const user = await User.query().where('userId', userId).first()
@@ -73,6 +72,30 @@ const resolvers = {
             }
     
             return await user.$relatedQuery('roles')
+        },
+
+        addPoints: async (_, args) => {
+            const user = await User.query().where('userId',args.userId).first()
+            if(!user) throw new Error('invalid user id')
+            await user.depositPoints(args.addPointsInfo)
+            return user
+        },
+
+        stranferPoints: async (_, args) => {
+            const sender = await User.query().where('userId',args.userId).first()
+            const receiver = await User.query().where('userId',args.to.userId).first()
+            if(!sender && !receiver) throw new Error('invalid user id')
+            await sender.depositPoints({
+                amount:`-${args.to.amount}`,
+                description: args.to.description || `transfered to ${receiver.userId}`
+            })
+
+            await receiver.depositPoints({
+                amount: args.to.amount,
+                description: args.to.description || `received transfer from ${receiver.userId}`
+            })
+
+            return sender
         },
     },
 
