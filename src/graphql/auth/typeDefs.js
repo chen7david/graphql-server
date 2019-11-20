@@ -16,6 +16,7 @@ const typeDefs = gql`
     extend type Mutation {
         authenticate(authInfo: authInfo!): authCredentials!
         activateAccount(token: String!): authCredentials!
+        resendActivation(email: String!): Boolean!
     }
 `
 

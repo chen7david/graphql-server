@@ -10,7 +10,7 @@ const typeDefs = gql`
         pointsHistory: [Point]!
         points: Int
         disabled: Boolean!
-        emailVerified: Boolean!
+        emailVerified: Boolean
     }
 
     type Point {
