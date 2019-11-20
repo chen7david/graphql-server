@@ -6,4 +6,9 @@ module.exports = {
     JWT_REFRESH_DURATION: '31d',
     JWT_ACTIVATE_ACCOUNT_SECRET: 'refresh-secret',
     JWT_ACTIVATE_ACCOUNT_DURATION: '7d',
+
+    EMAIL_SERVICE: 'gmail',
+    EMAIL_SENDER:'user@gmail.com',
+    GMAIL_ACCOUNT:'anotheruser@gmail.com',
+    GMAIL_PASSWORD:'password',
 }

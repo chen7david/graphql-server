@@ -2,6 +2,7 @@ const { User, Role } = require('./../../models')
 const { getMe } = require('./../../helpers/auth')
 const { validate, schema } = require('./../../helpers/validation')
 const { UniqueViolationError } = require('objection-db-errors')
+const { mail } = require('./../../helpers/mail')
 
 const resolvers = {
     Query:{
@@ -14,10 +15,6 @@ const resolvers = {
 
         user: async (_, args) => {
             const user = await User.query().where('userId', args.userId).first()
-            // await user.depositPoints({
-            //     amount:200,
-            //     description:'direct deposit'
-            // })
             return user
         },
     },
@@ -28,6 +25,19 @@ const resolvers = {
             try {
                 const data = validate(schema.addUser, args.addUserInfo)
                 const user = await User.query().insert(data)
+                const payload = {
+                    userId: user.userId
+                }
+                const activateToken = JWT.sign(payload, JWT_SECRET, {expiresIn: JWT_DURATION})
+                await mail.sendMail({
+                    to:user.email,
+                    subject:'Activation Email',
+                    body: mail.template('activation', {
+                        user,
+                        subject:'Activation Email',
+                        link: `http://localhost:5000/${activateToken}`
+                    })
+                })
                 return user
             }catch(error){
                 if(error instanceof UniqueViolationError) 

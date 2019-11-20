@@ -28,6 +28,10 @@ class User extends BaseModel {
         return await this.$relatedQuery('points').insert(object)
     }
 
+    async mail(body){
+        return body
+    }
+
     static get relationMappings(){ 
 
         const Role = require('./Role')

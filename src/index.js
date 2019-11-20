@@ -4,7 +4,6 @@ const { User } = require('./models')
 const { PORT, JWT_SECRET } = require('./config')
 const { users, roles, auth, groups } = require('./graphql')
 
-
 const typeDefs = gql`
     type Query
     type Mutation

@@ -49,10 +49,6 @@ const typeDefs = gql`
         users:[User]!
         user(userId: String!): User
     }
-
-    input depositPoints {
-        
-    }
     
     extend type Mutation {
         addUser(addUserInfo: addUserInfo!): User!
