@@ -84,27 +84,6 @@ const resolvers = {
             return await user.$relatedQuery('roles')
         },
 
-        addFriend: async (_, args) => {
-            const { userId, friendId } = args.addFriendInfo
-
-            const userOne = await User.query().where('userId', userId).first()
-            const userTwo = await User.query().where('userId', friendId).first()
-
-            if(!userOne || !userTwo) throw new Error('invalid relationship credentials')
-
-            friend = userOne.id > userTwo.id ? userOne : userTwo
-            friendOf = userOne.id == friend.id ? userTwo : userOne
-
-            try{
-                await friend.$relatedQuery('friends').relate( {id: friendOf.id, requester_id: userOne.id})
-            }catch(error){
-                console.log(error)
-                if(!error instanceof UniqueViolationError) throw(error)
-            }
- 
-            return true
-        },
-
         addPoints: async (_, args) => {
             const user = await User.query().where('userId',args.userId).first()
             if(!user) throw new Error('invalid user id')
@@ -128,6 +107,49 @@ const resolvers = {
 
             return sender
         },
+
+        addFriend: async (_, args) => {
+            const { userId, friendId } = args.friendshipInfo
+
+            const userOne = await User.query().where('userId', userId).first()
+            const userTwo = await User.query().where('userId', friendId).first()
+
+            if(!userOne || !userTwo) throw new Error('invalid relationship credentials')
+
+            friend = userOne.id > userTwo.id ? userOne : userTwo
+            friendOf = userOne.id == friend.id ? userTwo : userOne
+
+            try{
+                await friend.$relatedQuery('friends').relate({id: friendOf.id, requester_id: userOne.id})
+            }catch(error){
+                console.log(error)
+                if(!error instanceof UniqueViolationError) throw(error)
+            }
+ 
+            return true
+        },
+
+        updateFriendship: async (_, args) => {
+            const { userId, friendId } = args.friendshipInfo
+
+            const friend = await User.query().where('userId', userId).first()
+            const friendOf = await User.query().where('userId', friendId).first()
+            
+            
+            try{
+                
+                const x = await friend.$relatedQuery('friends')
+                .whereNot('requester_id', friend.id)
+                .andWhere('active', false)
+                // .patch({active: true})
+                console.log(x)
+            }catch(error){
+                // console.log(error)
+                if(!error instanceof UniqueViolationError) throw(error)
+            }
+ 
+            return true
+        },
     },
 
     User: {
@@ -143,15 +165,36 @@ const resolvers = {
             return sum.points || 0
         },
         friends: async (parent) => {
-            const friends = await parent.$relatedQuery('friends').where('active', true).andWhere('blocked', false)
-            const friendOf = await parent.$relatedQuery('friendsOf').where('active', true).andWhere('blocked', false)
+            const friends = await parent.$relatedQuery('friends')
+                .where('active', true)
+                .andWhere('blocked', false)
+            const friendOf = await parent.$relatedQuery('friendsOf')
+                .where('active', true)
+                .andWhere('blocked', false)
+
             return [...friends, ...friendOf]
         },
         friendRequests: async (parent) => {
-            const friends = await parent.$relatedQuery('friends').whereNot('requester_id', parent.id).andWhere('active', false)
-            const friendOf = await parent.$relatedQuery('friendsOf').whereNot('requester_id', parent.id).andWhere('active', false)
+            const friends = await parent.$relatedQuery('friends')
+                .whereNot('requester_id', parent.id)
+                .andWhere('active', false)
+
+            const friendOf = await parent.$relatedQuery('friendsOf')
+                .whereNot('requester_id', parent.id)
+                .andWhere('active', false)
+
             return [...friends, ...friendOf]
         },
+        blockedFriends: async (parent) => {
+            const friends = await parent.$relatedQuery('friends')
+                .where('blocker_id', parent.id)
+
+            const friendOf = await parent.$relatedQuery('friendsOf')
+                .where('blocker_id', parent.id)
+
+            return [...friends, ...friendOf]
+        },
+
     }
 }
 

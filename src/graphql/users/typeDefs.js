@@ -8,6 +8,7 @@ const typeDefs = gql`
         email: String!
         friends: [User]!
         friendRequests: [User]!
+        blockedFriends: [User]!
         roles: [Role]!
         pointsHistory: [Point]!
         points: Int
@@ -52,7 +53,7 @@ const typeDefs = gql`
         user(userId: String!): User
     }
 
-    input addFriendInfo {
+    input friendshipInfo {
         userId: String!
         friendId: String!
     }
@@ -64,7 +65,8 @@ const typeDefs = gql`
         syncUserRoles(syncUserRolesInfo: syncUserRolesInfo!): [Role]!
         addPoints(userId: String!, addPointsInfo: addPointsInfo!): User!
         stranferPoints(userId: String!, to:to): User!
-        addFriend(addFriendInfo: addFriendInfo!): Boolean!
+        addFriend(friendshipInfo: friendshipInfo!): Boolean!
+        updateFriendship(friendshipInfo: friendshipInfo!): Boolean!
     }
 `
 
