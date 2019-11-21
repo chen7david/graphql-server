@@ -24,7 +24,6 @@ const typeDefs = gql`
         token: String!
     }
     
-    
     extend type Mutation {
         authenticate(authInfo: authInfo!): authCredentials!
         refreshToken(refreshToken: String!): refreshCredentials!

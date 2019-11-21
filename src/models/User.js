@@ -65,6 +65,7 @@ class User extends BaseModel {
                     }
                 }
             },
+
             points: {
                 relation: BaseModel.HasManyRelation,
                 modelClass: Point,
@@ -72,7 +73,35 @@ class User extends BaseModel {
                     from:'users.id',
                     to:'points.user_id',
                 } 
+            },
+
+            friends: {
+                relation: BaseModel.ManyToManyRelation,
+                modelClass: User,
+                join:{
+                    from: 'users.id',
+                    to: 'users.id',
+                    through:{
+                        from: 'friends.user_id',
+                        to: 'friends.friend_id',
+                        extra: ['requester_id', 'blocked', 'active']
+                    }
+                }
+            },
+
+            friendsOf: {
+                relation: BaseModel.ManyToManyRelation,
+                modelClass: User,
+                join:{
+                    from: 'users.id',
+                    to: 'users.id',
+                    through:{
+                        from: 'friends.friend_id',
+                        to: 'friends.user_id'
+                    }
+                }
             }
+
         }
     }
 }

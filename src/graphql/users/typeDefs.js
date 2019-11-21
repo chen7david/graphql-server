@@ -6,6 +6,8 @@ const typeDefs = gql`
         userId: String!
         username: String!
         email: String!
+        friends: [User]!
+        friendRequests: [User]!
         roles: [Role]!
         pointsHistory: [Point]!
         points: Int
@@ -49,6 +51,11 @@ const typeDefs = gql`
         users:[User]!
         user(userId: String!): User
     }
+
+    input addFriendInfo {
+        userId: String!
+        friendId: String!
+    }
     
     extend type Mutation {
         addUser(addUserInfo: addUserInfo!): User!
@@ -57,6 +64,7 @@ const typeDefs = gql`
         syncUserRoles(syncUserRolesInfo: syncUserRolesInfo!): [Role]!
         addPoints(userId: String!, addPointsInfo: addPointsInfo!): User!
         stranferPoints(userId: String!, to:to): User!
+        addFriend(addFriendInfo: addFriendInfo!): Boolean!
     }
 `
 
