@@ -84,7 +84,7 @@ class User extends BaseModel {
                     through:{
                         from: 'friends.user_id',
                         to: 'friends.friend_id',
-                        extra: ['requester_id', 'blocked', 'active']
+                        extra: ['requester', 'state']
                     }
                 }
             },
@@ -98,7 +98,7 @@ class User extends BaseModel {
                     through:{
                         from: 'friends.friend_id',
                         to: 'friends.user_id',
-                        extra: ['requester_id', 'blocked', 'active']
+                        extra: ['requester', 'state']
                     }
                 }
             }

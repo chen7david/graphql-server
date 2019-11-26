@@ -1,6 +1,6 @@
 module.exports = {
     BASE_URL: 'http://localhost:5000/',
-    PORT: 5000,
+    PORT: 4000,
     JWT_SECRET: 'secret',
     JWT_DURATION: '1d',
     JWT_REFRESH_SECRET: 'refresh-secret',
