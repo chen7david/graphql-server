@@ -65,11 +65,11 @@ const typeDefs = gql`
         syncUserRoles(syncUserRolesInfo: syncUserRolesInfo!): [Role]!
         addPoints(userId: String!, addPointsInfo: addPointsInfo!): User!
         stranferPoints(userId: String!, to:to): User!
-        addFriend(friendshipInfo: friendshipInfo!): Boolean!
+        expressFriendship(friendshipInfo: friendshipInfo!): Boolean!
+        revokeFriendship(friendshipInfo: friendshipInfo!): Boolean!
         updateFriendship(friendshipInfo: friendshipInfo!): Boolean!
     }
 `
-
 module.exports = {
     typeDefs
 }
