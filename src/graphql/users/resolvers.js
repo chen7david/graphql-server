@@ -138,16 +138,15 @@ const resolvers = {
             return true
         },
 
-        updateFriendship: async (_, args) => {
-            const { userId, friendId } = args.friendshipInfo
+        updateFriendshipState: async (_, args) => {
+            const { userId, friendId, blocked } = args.friendshipStateInfo
 
-            const friend = await User.query().where('userId', userId).first()
+            const user = await User.query().where('userId', userId).first()
             const friendOf = await User.query().where('userId', friendId).first()
             
             try{
-                
-                const x = await friend.$relatedQuery('friends')
-                .andWhere('blocked', false)
+                const x = await user.$relatedQuery('friends').where('friend_id', friendOf.id).patch({blocked: blocked})
+                console.log(x)
             }catch(error){
                 // console.log(error)
                 if(!error instanceof UniqueViolationError) throw(error)

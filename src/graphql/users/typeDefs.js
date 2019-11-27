@@ -57,6 +57,12 @@ const typeDefs = gql`
         userId: String!
         friendId: String!
     }
+
+    input friendshipStateInfo {
+        userId: String!
+        friendId: String!
+        blocked: Boolean!
+    }
     
     extend type Mutation {
         addUser(addUserInfo: addUserInfo!): User!
@@ -67,7 +73,7 @@ const typeDefs = gql`
         stranferPoints(userId: String!, to:to): User!
         expressFriendship(friendshipInfo: friendshipInfo!): Boolean!
         revokeFriendship(friendshipInfo: friendshipInfo!): Boolean!
-        updateFriendship(friendshipInfo: friendshipInfo!): Boolean!
+        updateFriendshipState(friendshipStateInfo: friendshipStateInfo!): Boolean!
     }
 `
 module.exports = {
