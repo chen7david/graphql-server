@@ -25,7 +25,7 @@
     "graphql": "^14.5.8",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "objection": "^1.6.11",
     "objection-db-errors": "^1.1.1",
     "pluralize": "^8.0.0",
